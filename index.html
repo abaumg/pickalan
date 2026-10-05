@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Pickale-Tauschbörse</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<main>
+  <!-- Anmeldung -->
+  <section id="login" class="login-box hidden">
+    <div class="logo">🃏</div>
+    <h1>Pickale-Tauschbörse</h1>
+    <form id="login-form">
+      <label for="code" class="muted">Dein Geheimcode</label>
+      <input id="code" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="z.B. Tiger Banane 27" required>
+      <button class="primary" type="submit">Los geht's!</button>
+    </form>
+  </section>
+
+  <!-- App -->
+  <section id="app" class="hidden">
+    <div class="topbar">
+      <span class="hello">Hallo <span id="my-name"></span>!</span>
+      <button id="rename-btn" class="small" title="Namen ändern">✏️</button>
+      <span class="spacer"></span>
+      <button id="logout-btn" class="small">Abmelden</button>
+    </div>
+
+    <div id="no-campaign" class="panel hidden">Zurzeit gibt es keine Tauschaktion.</div>
+
+    <div id="campaign-area">
+      <div class="row">
+        <select id="campaign-select" aria-label="Tauschaktion"></select>
+      </div>
+
+      <div class="tabs">
+        <button data-tab="collection" class="active">📒 Sammlung</button>
+        <button data-tab="dups">🔁 Doppelte</button>
+      </div>
+
+      <!-- Sammlung -->
+      <div id="tab-collection">
+        <div class="progress"><div id="progress-bar" style="width:0"></div></div>
+        <div class="muted" id="progress-text"></div>
+        <div class="segmented" id="filters" role="group" aria-label="Filter">
+          <button data-filter="all" class="active">Alle<span class="count" data-count="all"></span></button>
+          <button data-filter="missing">Fehlen<span class="count" data-count="missing"></span></button>
+          <button data-filter="have">Habe<span class="count" data-count="have"></span></button>
+          <button data-filter="dup">Doppelt<span class="count" data-count="dup"></span></button>
+        </div>
+        <div class="searchbar">
+          <input id="search" type="search" placeholder="Nummer oder Name suchen" aria-label="Suche">
+        </div>
+        <p class="muted">Tippe auf einen Sticker: <b style="color:var(--miss)">rot</b> = fehlt, <b style="color:var(--have)">grün</b> = eingeklebt. Mit <b>+</b> zählst du Doppelte, sie bekommen ein <b style="color:var(--dup)">violettes</b> Abzeichen.</p>
+        <div id="grid" class="grid"></div>
+      </div>
+
+      <!-- Doppelte -->
+      <div id="tab-dups" class="hidden">
+        <div class="row">
+          <button id="share-btn" class="primary">🔗 Link zu meinen Doppelten teilen</button>
+          <button id="copy-list-btn">📋 Liste kopieren</button>
+        </div>
+        <p id="dups-summary" class="muted"></p>
+        <div id="dups-list" class="dup-blocks"></div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<dialog id="rename-dialog">
+  <form method="dialog" id="rename-form">
+    <h2 style="margin-top:0">Wie willst du heißen?</h2>
+    <input id="rename-input" maxlength="40" required>
+    <div class="row">
+      <span class="spacer"></span>
+      <button value="cancel" formnovalidate>Abbrechen</button>
+      <button value="ok" class="primary">Speichern</button>
+    </div>
+  </form>
+</dialog>
+
+<script type="module" src="app.js"></script>
+</body>
+</html>

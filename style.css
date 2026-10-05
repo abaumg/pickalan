@@ -1,0 +1,306 @@
+:root {
+  --bg: #f4f6fb;
+  --surface: #ffffff;
+  --text: #1d2433;
+  --muted: #667085;
+  --border: #dde2ec;
+  --primary: #3b5bdb;
+  --primary-text: #ffffff;
+  --have: #2f9e44;
+  --have-bg: #d3f9d8;
+  --miss: #e03131;
+  --miss-bg: #ffe3e3;
+  --dup: #7048e8;
+  --radius: 14px;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.4;
+}
+
+main { max-width: 960px; margin: 0 auto; padding: 16px; }
+
+h1 { font-size: 1.6rem; margin: .2em 0 .6em; }
+h2 { font-size: 1.25rem; margin: 1.2em 0 .5em; }
+
+.hidden { display: none !important; }
+.muted { color: var(--muted); }
+
+button, .btn {
+  font: inherit;
+  border: 1px solid var(--border);
+  background: var(--surface);
+  color: var(--text);
+  border-radius: 10px;
+  padding: 8px 14px;
+  cursor: pointer;
+  text-decoration: none;
+  display: inline-block;
+}
+button:hover, .btn:hover { filter: brightness(.96); }
+button.primary { background: var(--primary); color: var(--primary-text); border-color: var(--primary); }
+button.danger { color: var(--miss); }
+button.small { padding: 4px 10px; font-size: .9rem; }
+
+input, select, textarea {
+  font: inherit;
+  padding: 8px 10px;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: var(--surface);
+  color: var(--text);
+  max-width: 100%;
+}
+textarea { width: 100%; min-height: 140px; font-family: ui-monospace, monospace; }
+
+.panel {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 16px;
+  margin-bottom: 16px;
+}
+
+.row { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; }
+.spacer { flex: 1; }
+
+/* ---------- Login ---------- */
+.login-box { max-width: 420px; margin: 8vh auto 0; text-align: center; }
+.login-box .logo { font-size: 4rem; }
+.login-box input {
+  width: 100%;
+  font-size: 1.4rem;
+  padding: 14px;
+  text-align: center;
+  margin: 12px 0;
+}
+.login-box button { width: 100%; font-size: 1.3rem; padding: 14px; }
+
+/* ---------- Kopfzeile ---------- */
+.topbar { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; margin-bottom: 12px; }
+.topbar .hello { font-size: 1.3rem; font-weight: 600; }
+
+.tabs { display: flex; gap: 6px; margin: 8px 0 12px; }
+.tabs button { flex: 1; font-weight: 600; }
+.tabs button.active { background: var(--primary); color: var(--primary-text); border-color: var(--primary); }
+
+.progress { height: 12px; background: var(--miss-bg); border-radius: 6px; overflow: hidden; margin: 6px 0 4px; }
+.progress > div { height: 100%; background: var(--have); transition: width .3s; }
+
+/* ---------- Filter (Segment-Schalter) ---------- */
+.segmented {
+  display: flex;
+  gap: 4px;
+  padding: 4px;
+  margin: 12px 0 8px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, .05);
+}
+.segmented button {
+  flex: 1;
+  min-width: 0;
+  border: 0;
+  border-radius: 6px;
+  background: transparent;
+  padding: 10px 4px;
+  font-weight: 700;
+  color: var(--muted);
+  white-space: nowrap;
+}
+.segmented button .count {
+  display: inline-block;
+  min-width: 1.6em;
+  margin-left: 4px;
+  padding: 0 5px;
+  border-radius: 999px;
+  background: var(--bg);
+  font-size: .8rem;
+}
+.segmented button.active { color: #fff; background: var(--text); }
+.segmented button.active[data-filter="missing"] { background: var(--miss); }
+.segmented button.active[data-filter="have"] { background: var(--have); }
+.segmented button.active[data-filter="dup"] { background: var(--dup); }
+.segmented button.active .count { background: rgba(255, 255, 255, .25); }
+@media (max-width: 480px) {
+  .segmented button { font-size: .85rem; padding: 6px 2px; }
+  .segmented button .count { display: block; width: fit-content; margin: 2px auto 0; }
+}
+
+/* ---------- Suche ---------- */
+.searchbar { position: relative; margin: 0 0 14px; }
+.searchbar input { width: 100%; padding-left: 38px; }
+.searchbar::before {
+  content: "🔍";
+  position: absolute;
+  left: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: .95rem;
+  pointer-events: none;
+}
+
+/* ---------- Sticker-Karten (16:9) ---------- */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  gap: 10px;
+}
+.card {
+  position: relative;
+  aspect-ratio: 16 / 9;
+  display: grid;
+  grid-template-columns: 1fr auto;
+  border: 2px solid var(--miss);
+  border-radius: 6px;
+  background: var(--miss-bg);
+  overflow: hidden;
+  user-select: none;
+}
+.card.have { border-color: var(--have); background: var(--have-bg); }
+.card .main {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  min-width: 0;
+  padding: 6px 10px;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  text-align: left;
+}
+.card .num { font-size: 1.5rem; font-weight: 800; line-height: 1.1; }
+.card .name {
+  font-size: .8rem;
+  color: var(--muted);
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  overflow-wrap: anywhere;
+}
+.card .dupctl {
+  display: flex;
+  flex-direction: column;
+  border-left: 1px solid rgba(0, 0, 0, .08);
+  background: rgba(255, 255, 255, .55);
+}
+.card:not(.have) .dupctl { display: none; }
+.card .dupctl button {
+  flex: 1;
+  width: 40px;
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  font-size: 1.2rem;
+  font-weight: 700;
+}
+.card .dupctl button + button { border-top: 1px solid rgba(0, 0, 0, .08); }
+.card .dupctl button:disabled { opacity: .3; cursor: default; }
+
+/* Doppelte: kräftiges Abzeichen statt Rand */
+.dup-badge {
+  position: absolute;
+  top: 6px;
+  right: 46px;
+  padding: 1px 7px;
+  border-radius: 4px;
+  background: var(--dup);
+  color: #fff;
+  font-size: .85rem;
+  font-weight: 800;
+  pointer-events: none;
+}
+
+/* ---------- Doppelte als Liste in 10er-Blöcken ---------- */
+.dup-blocks {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 12px;
+  align-items: start;
+}
+.dup-block {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  overflow: hidden;
+}
+.dup-block h3 {
+  display: flex;
+  justify-content: space-between;
+  margin: 0;
+  padding: 6px 12px;
+  font-size: .9rem;
+  background: var(--bg);
+  border-bottom: 1px solid var(--border);
+}
+.dup-block h3 span { color: var(--muted); font-weight: 600; }
+.dup-block ul { list-style: none; margin: 0; padding: 0; }
+.dup-block li {
+  display: grid;
+  grid-template-columns: 3em 1fr auto;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 12px;
+  border-bottom: 1px solid var(--border);
+}
+.dup-block li:last-child { border-bottom: 0; }
+.dup-block li .num { font-weight: 800; }
+.dup-block li .name { overflow-wrap: anywhere; }
+.dup-block li .qty {
+  padding: 1px 8px;
+  border-radius: 4px;
+  background: var(--dup);
+  color: #fff;
+  font-weight: 800;
+  font-size: .85rem;
+}
+.dup-block li.need { background: var(--have-bg); }
+.need-tag { color: var(--have); font-size: .75rem; font-weight: 700; margin-left: 6px; white-space: nowrap; }
+
+/* ---------- Tabellen (Admin) ---------- */
+table { width: 100%; border-collapse: collapse; }
+th, td { text-align: left; padding: 6px 8px; border-bottom: 1px solid var(--border); vertical-align: middle; }
+.table-wrap { overflow-x: auto; }
+.code { font-family: ui-monospace, monospace; font-weight: 700; }
+
+/* ---------- Dialog & Toast ---------- */
+dialog { border: 0; border-radius: var(--radius); padding: 20px; max-width: min(92vw, 420px); width: 100%; }
+dialog::backdrop { background: rgba(0, 0, 0, .35); }
+dialog input { width: 100%; margin: 10px 0; }
+
+#toast {
+  position: fixed;
+  left: 50%;
+  bottom: 24px;
+  transform: translateX(-50%) translateY(80px);
+  background: var(--text);
+  color: var(--surface);
+  padding: 10px 18px;
+  border-radius: 999px;
+  transition: transform .25s;
+  z-index: 10;
+  max-width: calc(100vw - 32px);
+}
+#toast.show { transform: translateX(-50%) translateY(0); }
+#toast.error { background: var(--miss); }
+
+/* ---------- Druck: Codekarten ---------- */
+.print-cards { display: none; }
+@media print {
+  body { background: #fff; }
+  body > *:not(.print-cards) { display: none !important; }
+  .print-cards { display: grid; grid-template-columns: 1fr 1fr; gap: 10mm; }
+  .print-card { border: 2px dashed #999; border-radius: 6mm; padding: 6mm; break-inside: avoid; text-align: center; }
+  .print-card .pc-name { font-size: 14pt; }
+  .print-card .pc-code { font-size: 20pt; font-weight: 800; margin: 3mm 0; }
+}

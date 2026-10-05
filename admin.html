@@ -1,0 +1,100 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Pickale-Admin</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<main>
+  <!-- Admin-Anmeldung -->
+  <section id="admin-login" class="login-box hidden">
+    <div class="logo">🔐</div>
+    <h1>Admin</h1>
+    <form id="admin-login-form">
+      <input id="email" type="email" placeholder="E-Mail" autocomplete="username" required>
+      <input id="password" type="password" placeholder="Passwort" autocomplete="current-password" required>
+      <button class="primary" type="submit">Anmelden</button>
+    </form>
+  </section>
+
+  <section id="admin-app" class="hidden">
+    <div class="topbar">
+      <span class="hello">Pickale-Admin</span>
+      <span class="spacer"></span>
+      <a class="btn small" href="index.html">Zur App</a>
+      <button id="admin-logout" class="small">Abmelden</button>
+    </div>
+
+    <div class="tabs">
+      <button data-tab="campaigns" class="active">Tauschaktionen</button>
+      <button data-tab="players">Benutzer</button>
+    </div>
+
+    <!-- Tauschaktionen -->
+    <div id="tab-campaigns">
+      <div class="panel">
+        <form id="campaign-form" class="row">
+          <input id="campaign-name" placeholder="Name der Aktion, z.B. Fußball-WM 2026" required style="flex:1">
+          <button class="primary">Aktion anlegen</button>
+        </form>
+      </div>
+      <div class="panel table-wrap">
+        <table>
+          <thead><tr><th>Name</th><th>Sticker</th><th>Aktiv</th><th></th></tr></thead>
+          <tbody id="campaign-rows"></tbody>
+        </table>
+      </div>
+
+      <div id="sticker-editor" class="panel hidden">
+        <h2 style="margin-top:0">Sticker: <span id="editor-title"></span></h2>
+        <p class="muted">
+          Eine Zeile pro Sticker: <code>Nummer Name</code> (Trenner: Leerzeichen, Tab, <code>;</code> oder <code>,</code>).
+          Bereiche ohne Namen gehen auch: <code>1-200</code>.
+          Gibt es eine Nummer schon, wird ihr Name überschrieben.
+        </p>
+        <textarea id="sticker-import" placeholder="1 Wappen&#10;2 Mannschaftsfoto&#10;3;Max Mustermann"></textarea>
+        <div class="row" style="margin:8px 0 16px">
+          <button id="import-btn" class="primary">Sticker übernehmen</button>
+          <span class="spacer"></span>
+          <button id="editor-close">Schließen</button>
+        </div>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>Nr.</th><th>Name</th><th></th></tr></thead>
+            <tbody id="sticker-rows"></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- Benutzer -->
+    <div id="tab-players" class="hidden">
+      <div class="panel">
+        <form id="player-form" class="row">
+          <input id="player-name" placeholder="Name des Kindes" required maxlength="40" style="flex:1">
+          <button class="primary">Benutzer anlegen</button>
+        </form>
+        <p class="muted">Der Anmeldecode wird automatisch erzeugt (Tier + Ding + Zahl).</p>
+      </div>
+      <div class="panel table-wrap">
+        <div class="row" style="margin-bottom:8px">
+          <span class="muted" id="player-count"></span>
+          <span class="spacer"></span>
+          <button id="print-btn">🖨️ Codekarten drucken</button>
+        </div>
+        <table>
+          <thead><tr><th>Name</th><th>Code</th><th></th></tr></thead>
+          <tbody id="player-rows"></tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+</main>
+
+<div class="print-cards" id="print-cards"></div>
+
+<script type="module" src="admin.js"></script>
+</body>
+</html>
